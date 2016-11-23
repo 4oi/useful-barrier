@@ -1,0 +1,5 @@
+name: UsefulBarrier
+version: ${project.version}
+author: toyblocks
+
+main: jp.llv.ub.UsefulBarrier

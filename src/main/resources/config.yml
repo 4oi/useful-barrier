@@ -1,0 +1,15 @@
+##Particle update check##
+##default 20 (ticks)
+check_freq: 20
+##default 10 (blocks, meters)
+check_range: 10
+
+##how to break barrier##
+break_tool: barrier
+visible_tool: barrier
+
+##drops when barrier is broken##
+drops:
+  barrier: 75.00
+##dirt: 450.00 <-4+1(50%)
+##diamond: 1.00
