@@ -17,6 +17,7 @@
 package jp.llv.ub;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
@@ -50,6 +51,8 @@ public class UsefulBarrier extends JavaPlugin implements Listener {
     private static Material BREAKER;
     private static Material VISIBLE;
 
+    private Optional<NCPHook> ncp;
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
@@ -74,13 +77,18 @@ public class UsefulBarrier extends JavaPlugin implements Listener {
             }
             ITEM_DROPS.add(new ItemDrop(m, drops.getDouble(name)));
         }
+
+        ncp = getServer().getPluginManager().isPluginEnabled("NoCheatPlus")
+                ? Optional.of(new NCPHook())
+                : Optional.empty();
+
         getServer().getPluginManager().registerEvents(this, this);
     }
 
     private void checkItemInHand(Player player) {
         if ((player.isOnline())
-                && (player.getGameMode() == GameMode.SURVIVAL)
-                && (player.getInventory().getItemInMainHand() != null) && (player.getInventory().getItemInMainHand().getType() == Material.BARRIER)) {
+            && (player.getGameMode() == GameMode.SURVIVAL)
+            && (player.getInventory().getItemInMainHand() != null) && (player.getInventory().getItemInMainHand().getType() == Material.BARRIER)) {
             EffectingTask.call(player);
         } else {
             EffectingTask.cancel(player);
@@ -130,7 +138,12 @@ public class UsefulBarrier extends JavaPlugin implements Listener {
             return;
         }
         BlockBreakEvent newEvent = new BlockBreakEvent(event.getClickedBlock(), event.getPlayer());
+        
+        ncp.ifPresent(hook ->  hook.exempt(event.getPlayer()));
         getServer().getPluginManager().callEvent(newEvent);
+        ncp.ifPresent(hook ->  hook.unexempt(event.getPlayer()));
+        
+        
         if (newEvent.isCancelled()) {
             return;
         }

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>jp.llv</groupId>
     <artifactId>useful-barrier</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,6 +36,13 @@
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.11-R0.1-SNAPSHOT</version>
+        </dependency>
+        <!-- No Chest Plus Dependency -->
+        <dependency>
+            <groupId>fr.neatmonster</groupId>
+            <artifactId>nocheatplus</artifactId>
+            <version>3.15.1-RC</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
